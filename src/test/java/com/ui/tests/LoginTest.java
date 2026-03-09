@@ -1,28 +1,23 @@
 package com.ui.tests;
 
-import java.time.Duration;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.constants.Browser;
+import com.ui.pages.HomePage;
 
 public class LoginTest {
 
-	public static void main(String[] args){
-		
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--start-maximized");
-		WebDriver driver = new ChromeDriver(options);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-		
-		driver.get("https://automationpractice.techwithjatin.com");
+	public static void main(String[] args) {
 
-		WebElement signIn = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//a[contains(text(),\"Sign\")]"))));
-		signIn.click();
+		HomePage hg = new HomePage(Browser.EDGE);
+		
+		// WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+
+		// driver.get("https://automationpractice.techwithjatin.com");
+
+		//hg.goToUrl("https://automationpractice.techwithjatin.com");
+
+		String accountName = hg.goToLoginPage().doLoginWith("xamasan125@keecs.com", "password").getAccountName();
+		System.out.println(accountName);
+
 		
 
 	}
