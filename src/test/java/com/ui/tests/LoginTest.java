@@ -1,25 +1,36 @@
 package com.ui.tests;
 
-import com.constants.Browser;
+import static com.constants.Browser.CHROME;
+import static org.testng.Assert.assertEquals;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ui.pages.HomePage;
+import com.ui.pojo.User;
 
 public class LoginTest {
 
-	public static void main(String[] args) {
+	private HomePage hg;
 
-		HomePage hg = new HomePage(Browser.EDGE);
-		
-		// WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+	@BeforeMethod
+	public void setup() {
+		hg = new HomePage(CHROME);
+	}
 
-		// driver.get("https://automationpractice.techwithjatin.com");
+	@Test(description = "Verifies with the valid user is able to login into the application", groups = {"e2e","sanity"},
+			dataProviderClass = com.ui.dataproviders.LoginDataProvider.class, dataProvider = "LoginTestDataProvider")
+	public void login(User user) {
 
-		//hg.goToUrl("https://automationpractice.techwithjatin.com");
+		assertEquals(hg.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getAccountName(),
+				"Arshad Kapadi");
 
-		String accountName = hg.goToLoginPage().doLoginWith("xamasan125@keecs.com", "password").getAccountName();
-		System.out.println(accountName);
+	}
 
-		
-
+	@AfterMethod
+	public void teardown() {
+		hg.getDriver().quit();
 	}
 
 }

@@ -3,13 +3,17 @@ package com.ui.pages;
 import org.openqa.selenium.By;
 
 import com.constants.Browser;
+import static com.constants.Env.*;
 import com.utility.BrowserUtility;
+import com.utility.JsonUtility;
+
+import static com.utility.PropertiesUtility.*;
 
 public final class HomePage extends BrowserUtility {
 
 	public HomePage(Browser browserName) {
 		super(browserName);
-		goToUrl("https://automationpractice.techwithjatin.com");
+		goToUrl(JsonUtility.readJSON(QA));
 
 	}
 
